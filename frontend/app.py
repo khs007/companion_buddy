@@ -23,7 +23,10 @@ st.markdown("""
 # Show uploaded files in sidebar
 import requests
 try:
-    res = requests.get("https://companion-buddy-backend.onrender.com/", timeout=3)
+    res = requests.get(
+    "https://companion-buddy-backend.onrender.com/upload/list",
+    timeout=20
+)
     files = res.json().get("files", [])
     if files:
         st.sidebar.markdown("### 📄 Your Documents")
