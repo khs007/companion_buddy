@@ -10,9 +10,6 @@ langchain-google-genai==1.0.6
 langchain-groq==0.1.6
 chromadb==0.5.3
 
-# Embeddings
-sentence-transformers==3.0.0
-
 # PDF processing
 pypdf==4.2.0
 

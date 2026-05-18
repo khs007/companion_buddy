@@ -12,13 +12,20 @@ def get_vector_store(collection_name: str) -> Chroma:
         persist_directory=settings.chroma_dir
     )
 
-
 def add_documents_to_store(docs: list[Document], collection_name: str):
-    """Add chunked documents into the vector store."""
-    store = get_vector_store(collection_name)
-    store.add_documents(docs)
-    print(f"Added {len(docs)} chunks to collection '{collection_name}'")
+    """Add chunked documents into the vector store in small batches."""
 
+    store = get_vector_store(collection_name)
+
+    batch_size = 5
+
+    for i in range(0, len(docs), batch_size):
+        batch = docs[i:i + batch_size]
+
+        print(f"Uploading batch {i // batch_size + 1}...")
+        store.add_documents(batch)
+
+    print(f"Added {len(docs)} chunks to collection '{collection_name}'")
 
 def get_retriever(collection_name: str):
     """Return a retriever that fetches top-k relevant chunks."""

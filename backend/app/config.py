@@ -21,8 +21,8 @@ class Settings(BaseSettings):
     chroma_dir: str = "chroma_db"
 
     # RAG settings
-    chunk_size: int = 1000
-    chunk_overlap: int = 200
+    chunk_size: int = 1500
+    chunk_overlap: int = 100
     retrieval_k: int = 4  
 
     class Config:
