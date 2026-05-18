@@ -84,7 +84,7 @@ with tab3:
     if st.button("Generate Flashcards", type="primary"):
         with st.spinner("Creating flashcards..."):
             res = requests.post(
-                "http://localhost:8000/generate/flashcards",
+                "https://companion-buddy-backend.onrender.com/flashcards",
                 json={"filename": selected_file, "num_cards": num_cards}
             )
 

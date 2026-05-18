@@ -14,7 +14,7 @@ if uploaded:
     if st.button("Upload & Index PDF", type="primary"):
         with st.spinner("Processing your PDF... this takes ~10-20 seconds"):
             res = requests.post(
-                "http://localhost:8000/upload/pdf",
+                "https://companion-buddy-backend.onrender.com/upload/pdf",
                 files={"file": (uploaded.name, uploaded.getvalue(), "application/pdf")}
             )
 

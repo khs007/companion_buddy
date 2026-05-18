@@ -5,7 +5,7 @@ import requests
 
 st.header("📊 Study Progress")
 
-res = requests.get("http://localhost:8000/progress/summary")
+res = requests.get("https://companion-buddy-backend.onrender.com/upload/summary")
 
 if res.status_code != 200:
     st.error("Couldn't load progress data.")

@@ -6,7 +6,7 @@ import requests
 st.header("💬 Chat with Your Notes")
 
 # Document selector
-res = requests.get("http://localhost:8000/upload/list")
+res = requests.get("https://companion-buddy-backend.onrender.com/upload/list")
 files = res.json().get("files", []) if res.status_code == 200 else []
 
 if not files:
