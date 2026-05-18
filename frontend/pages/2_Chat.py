@@ -41,7 +41,7 @@ if question:
     with st.chat_message("assistant"):
         with st.spinner("Searching your notes..."):
             res = requests.post(
-                "http://localhost:8000/chat/ask",
+                "https://companion-buddy-backend.onrender.com/chat/ask",
                 json={"question": question, "filename": selected_file}
             )
 

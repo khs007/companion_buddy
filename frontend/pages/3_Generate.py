@@ -6,7 +6,7 @@ import json
 
 st.header("🧠 Generate Study Materials")
 
-res = requests.get("http://localhost:8000/upload/list")
+res = requests.get("https://companion-buddy-backend.onrender.com/upload/list")
 files = res.json().get("files", []) if res.status_code == 200 else []
 
 if not files:
@@ -22,7 +22,7 @@ with tab1:
     if st.button("Generate Summary", type="primary"):
         with st.spinner("Summarizing..."):
             res = requests.post(
-                "http://localhost:8000/generate/summary",
+                "https://companion-buddy-backend.onrender.com/generate/summary",
                 json={"filename": selected_file}
             )
         if res.status_code == 200:
@@ -37,7 +37,7 @@ with tab2:
     if st.button("Generate Quiz", type="primary"):
         with st.spinner("Creating quiz..."):
             res = requests.post(
-                "http://localhost:8000/generate/quiz",
+                "https://companion-buddy-backend.onrender.com/generate/quiz",
                 json={"filename": selected_file, "num_questions": num_q}
             )
 
@@ -71,7 +71,7 @@ with tab2:
             st.metric("Your Score", f"{score}/{len(st.session_state.quiz)} ({pct}%)")
 
             # Save to progress tracker
-            requests.post("http://localhost:8000/progress/quiz-result", json={
+            requests.post("https://companion-buddy-backend.onrender.com/quiz-result", json={
                 "filename": selected_file,
                 "score": score,
                 "total": len(st.session_state.quiz)
