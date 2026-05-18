@@ -44,4 +44,9 @@ def get_collection_name(filename: str) -> str:
     name = os.path.splitext(filename)[0]  
     name = name.lower().replace(" ", "_")
     name = "".join(c for c in name if c.isalnum() or c == "_")
-    return name[:50]  # ChromaDB has a length limit
+    name = name[:50]
+
+    # Remove leading/trailing underscores or hyphens
+    name = name.strip("_-")
+
+    return name

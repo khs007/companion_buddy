@@ -28,6 +28,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     # Process and index the PDF
     try:
         chunks = load_and_chunk_pdf(save_path)
+        print(f"Chunks generated: {len(chunks)}")
         collection = get_collection_name(file.filename)
         add_documents_to_store(chunks, collection)
     except Exception as e:

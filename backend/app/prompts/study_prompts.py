@@ -15,7 +15,6 @@ Answer (be clear and concise, use bullet points if listing multiple things):"""
 )
 
 # ── Summary ───────────────────────────────────────────────────────────────────
-
 SUMMARY_PROMPT = PromptTemplate(
     input_variables=["text"],
     template="""Create a clear, structured summary of the following study material.

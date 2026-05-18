@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
 
     gemini_model: str = "gemini-1.5-flash"
-    groq_model: str = "llama3-8b-8192"
+    groq_model: str = "llama-3.1-8b-instant"    
 
     # Embedding model (runs locally, no API key needed)
     embedding_model: str = "all-MiniLM-L6-v2"
