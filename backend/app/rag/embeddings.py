@@ -1,4 +1,4 @@
-from langchain_groq import GroqEmbeddings
+from langchain_community.embeddings import JinaEmbeddings
 from app.config import settings
 
 _embedding_model = None
@@ -7,15 +7,11 @@ def get_embedding_model():
     global _embedding_model
 
     if _embedding_model is None:
-        if not settings.groq_api_key:
-            raise ValueError("GROQ_API_KEY not set in .env")
-        
-        print("Loading Groq embeddings...")
-        _embedding_model = GroqEmbeddings(
-            model="mixtral-8x7b-32768",
-            groq_api_key=settings.groq_api_key,
-            timeout=30
+        print("Loading Jina embeddings...")
+        _embedding_model = JinaEmbeddings(
+            model_name="jina-embeddings-v2-base-en",
+            api_key=settings.jina_api_key
         )
-        print("✅ Ready")
+        print("✅ Jina embeddings ready")
 
     return _embedding_model
