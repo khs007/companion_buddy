@@ -71,7 +71,7 @@ with tab2:
             st.metric("Your Score", f"{score}/{len(st.session_state.quiz)} ({pct}%)")
 
             # Save to progress tracker
-            requests.post("https://companion-buddy-backend.onrender.com/quiz-result", json={
+            requests.post("https://companion-buddy-backend.onrender.com/progress/quiz-result", json={
                 "filename": selected_file,
                 "score": score,
                 "total": len(st.session_state.quiz)
