@@ -2,9 +2,6 @@ import os
 from pathlib import Path
 from pydantic_settings import BaseSettings
 
-# Force load .env from backend directory
-env_path = Path(__file__).parent.parent / ".env"
-
 class Settings(BaseSettings):
     
     llm_provider: str = "groq"
@@ -23,7 +20,11 @@ class Settings(BaseSettings):
     retrieval_k: int = 4  
 
     class Config:
-        env_file = str(env_path)  # ← Explicit path
+        # Look for .env in the backend directory
+        env_file = str(Path(__file__).parent.parent / ".env")
+        env_file_encoding = "utf-8"
+        case_sensitive = False  # Allow uppercase or lowercase
 
 
 settings = Settings()
+print(f"Loaded JINA_API_KEY: {bool(settings.jina_api_key)}")
