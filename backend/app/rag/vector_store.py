@@ -1,3 +1,4 @@
+import time
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
 from app.rag.embeddings import get_embedding_model
@@ -5,30 +6,38 @@ from app.config import settings
 
 
 def get_vector_store(collection_name: str) -> Chroma:
-    """Load or create a ChromaDB collection for a specific document."""
     return Chroma(
         collection_name=collection_name,
         embedding_function=get_embedding_model(),
         persist_directory=settings.chroma_dir
     )
 
+
 def add_documents_to_store(docs: list[Document], collection_name: str):
-    """Add chunked documents into the vector store in small batches."""
-
     store = get_vector_store(collection_name)
-
-    batch_size = 5
+    batch_size = 2
+    max_retries = 3
 
     for i in range(0, len(docs), batch_size):
         batch = docs[i:i + batch_size]
+        batch_num = i // batch_size + 1
 
-        print(f"Uploading batch {i // batch_size + 1}...")
-        store.add_documents(batch)
+        for attempt in range(1, max_retries + 1):
+            try:
+                print(f"Batch {batch_num} attempt {attempt}")
+                store.add_documents(batch)
+                print(f"✅ Batch {batch_num} done")
+                break
+            except Exception as e:
+                if attempt == max_retries:
+                    raise RuntimeError(f"Failed after {max_retries} attempts: {str(e)}")
+                print(f"⏳ Retry in 3s...")
+                time.sleep(3)
 
-    print(f"Added {len(docs)} chunks to collection '{collection_name}'")
+    print(f"✅ Added {len(docs)} chunks to '{collection_name}'")
+
 
 def get_retriever(collection_name: str):
-    """Return a retriever that fetches top-k relevant chunks."""
     store = get_vector_store(collection_name)
     return store.as_retriever(
         search_type="similarity",
